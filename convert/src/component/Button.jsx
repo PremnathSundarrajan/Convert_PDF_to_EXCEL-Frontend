@@ -23,8 +23,9 @@ export default function UploadPDFButton() {
     selectedFiles.forEach((file) => formData.append("pdfs", file));
 
     try {
-      const response = await fetch("http://localhost:3000/upload", {
+      const response = await fetch("https://convert-pdf-to-excel-1z5e.onrender.com/upload", {
         method: "POST",
+          credentials: "include",
         body: formData,
       });
 

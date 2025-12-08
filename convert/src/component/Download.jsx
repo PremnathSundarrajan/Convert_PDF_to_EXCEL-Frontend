@@ -1,7 +1,7 @@
 export default function DownloadExcelButton() {
 
   const handleDownload = () => {
-    window.open("http://localhost:3000/excel", "_blank");
+    window.open("https://convert-pdf-to-excel-1z5e.onrender.com/excel", "_blank");
   };
 
   return (
