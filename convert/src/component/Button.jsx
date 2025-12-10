@@ -23,24 +23,42 @@ export default function UploadPDFButton() {
     selectedFiles.forEach((file) => formData.append("pdfs", file));
 
     try {
-      const response = await fetch("https://convert-pdf-to-excel-1z5e.onrender.com/upload", {
-        method: "POST",
-          credentials: "include",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://convert-pdf-to-excel-1z5e.onrender.com/convert",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
-      if (!response.ok) throw new Error("Upload failed");
+      if (!response.ok) throw new Error("Conversion failed");
 
-      alert("Upload Successful!");
+      // ⭐ Read Excel file as blob
+      const blob = await response.blob();
+
+      // ⭐ Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+
+      // Dynamic filename
+      a.download = `converted_${Date.now()}.xlsx`;
+
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      alert("Excel downloaded successfully!");
+
     } catch (err) {
-      alert("Error uploading PDFs!");
       console.error(err);
+      alert("Error converting PDFs!");
     }
   };
 
   return (
     <>
-      {/* Hidden input field */}
+      {/* Hidden file input */}
       <input
         type="file"
         ref={fileInputRef}
@@ -51,13 +69,11 @@ export default function UploadPDFButton() {
       />
 
       {/* File select button */}
-      <button onClick={handleClick}>
-        Select PDF Files
-      </button>
+      <button onClick={handleClick}>Select PDF Files</button>
 
       {/* Upload button */}
       <button onClick={handleUpload} style={{ marginLeft: "10px" }}>
-        Upload
+        Convert to Excel
       </button>
 
       {/* List selected files */}
