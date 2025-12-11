@@ -30,13 +30,14 @@ export default function UploadPDFButton() {
         "https://convert-pdf-to-excel-1z5e.onrender.com/convert",
         {
           method: "POST",
-          credentials:true,
+          credentials:"include",
           body: formData,
         }
       );
 
       // 🔥 Check if backend returned JSON (error)
       const contentType = response.headers.get("content-type");
+      console.log("Content-Type:", contentType);
 
       if (contentType && contentType.includes("application/json")) {
         const errorData = await response.json();
