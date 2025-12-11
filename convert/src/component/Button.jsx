@@ -30,6 +30,7 @@ export default function UploadPDFButton() {
         "https://convert-pdf-to-excel-1z5e.onrender.com/convert",
         {
           method: "POST",
+          credentials:true,
           body: formData,
         }
       );
